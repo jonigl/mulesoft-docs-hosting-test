@@ -1,0 +1,17 @@
+Logging is available for apps deployed to both shared and private
+spaces.
+
+If your organization has a Titanium subscription, you can use Anypoint
+Monitoring for more advanced searching and log management. For more
+information, see monitoring::index.xml.
+
+Unresolved directive in ch2-manage-app-logs.adoc -
+include::partial$deployment.adoc[tag=configureLogging,leveloffset=+1]
+
+See Also
+
+-   ch2-integrate-log-system.xml
+
+-   ch2-view-logs.xml
+
+-   monitoring::index.xml

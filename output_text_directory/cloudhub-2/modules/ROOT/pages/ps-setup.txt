@@ -1,0 +1,40 @@
+Before You Begin
+
+-   Assign permissions.
+
+-   Gather required setup information.
+
+Workflow
+
+1.  Create the private space.
+
+2.  Create the private network.
+
+    a.  Test the private network by deploying an app.
+
+    b.  Configure internal DNS servers, if necessary.
+
+3.  Create a connection to an external network.
+
+    -   Create a VPN connection.
+
+    -   Connect to a transit gateway.
+
+4.  Customize the private space:
+
+    a.  Configure domains and certificates (TLS context) for the private
+        space.
+
+    b.  Configure firewall rules to manage traffic to the private space.
+
+    c.  Associate environments and business groups with the private
+        space.
+
+    d.  Configure advanced settings, including HTTP request handling and
+        ingress load balancer log levels.
+
+See Also
+
+-   ps-create-configure.xml
+
+-   ps-configure.xml

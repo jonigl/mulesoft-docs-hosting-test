@@ -1,0 +1,99 @@
+CloudHub 2.0
+
+-   CloudHub 2.0 Overview
+
+-   Release Notes
+
+-   Features of CloudHub 2.0
+
+    -   CloudHub 2.0 for CloudHub 1.0 Users
+
+    -   ch2-limits.xml
+
+    -   Shared Spaces
+
+    -   Private Spaces
+
+        -   Anypoint VPN
+
+        -   Transit Gateway Attachments
+
+-   CloudHub 2.0 Architecture
+
+    -   Clustering
+
+    -   CloudHub 2.0 Operating System Patch Updates
+
+    -   Run Vulnerability Assessment and Penetration Tests
+
+-   CloudHub 2.0 Networking Architecture
+
+-   Extending Your Network to Anypoint Platform
+
+    -   Assigning Permissions
+
+    -   Gathering Required Setup Information
+
+    -   Creating Private Spaces
+
+    -   ps-create-configure-vpn.xml
+
+    -   ps-create-configure-tgw.xml
+
+    -   ps-configure.xml
+
+        -   ps-config-ssl-endpoints.xml
+
+        -   Configuring Domains and Certificates for a Private Space
+
+        -   ps-config-fw-rules.xml
+
+        -   ps-config-app-level-egress.xml
+
+        -   ps-config-env.xml
+
+        -   ps-config-advanced.xml
+
+    -   ps-manage.xml
+
+-   Deploying Apps to CloudHub 2.0
+
+    -   ch2-deploy-shared-space.xml
+
+    -   ch2-deploy-private-space.xml
+
+        -   ch2-config-endpoints-paths.xml
+
+    -   ch2-configure-horizontal-autoscaling.xml
+
+    -   ch2-deploy-maven.xml
+
+    -   ch2-deploy-cli.xml
+
+    -   ch2-deploy-api.xml
+
+    -   ch2-download-test-app.xml
+
+    -   ch2-integrate-log-system.xml
+
+-   Managing Apps Deployed to CloudHub 2.0
+
+    -   Updating Apps
+
+    -   Managing App Schedules
+
+    -   Changing App Behavior with Properties
+
+        -   Protecting App Property Values
+
+    -   ch2-manage-app-logs.xml
+
+-   ch2-monitor-apps.xml
+
+    -   Viewing Log Data for Deployed Apps
+
+        -   Log Search Query Syntax
+
+    -   Viewing Diagnostic Data for Deployed Apps
+
+    -   Configuring Application Alerts

@@ -1,0 +1,15 @@
+In addition to using the query builder and facet search user interface
+in Runtime Manager log search, you can use the log search query
+language.
+
+monitoring::partial$include-log-search.adoc
+
+monitoring::partial$include-log-search.adoc
+
+monitoring::partial$include-log-search.adoc
+
+monitoring::partial$include-log-search.adoc
+
+monitoring::partial$include-log-search.adoc
+
+monitoring::partial$include-log-search.adoc

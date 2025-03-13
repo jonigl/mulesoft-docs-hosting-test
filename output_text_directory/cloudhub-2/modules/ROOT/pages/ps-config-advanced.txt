@@ -1,0 +1,157 @@
+Use options on the Advanced tab to:
+
+-   Configure how the ingress load balancer handles HTTP requests.
+
+-   Specify the read-response timeout.
+
+    This value is the amount of time CloudHub 2.0 waits for a response
+    from the Mule application. If no data is sent or received in the
+    specified time, CloudHub 2.0 drops the request with a 504 error.
+
+-   Configure ingress load balancer logs levels and download logs.
+
+-   Configure Amazon Web Services (AWS) service roles.
+
+Configure HTTP Requests and Read-Response Timeout
+
+When you modify HTTP requests, applications may not be reachable for up
+to 5 seconds.
+
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName]
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=clickAdvanced] .
+Configure how the private accepts inbound traffic:
+
++
+
+CloudHub 2.0 doesn’t allow you to accept only insecure HTTP requests.
+
+From the HTTP Requests list, select one of the following:
+
+-   Redirect to HTTPS
+
+    Redirects HTTP requests to the same URL using the HTTPS protocol.
+
+-   Accept HTTP
+
+    Accepts the inbound request on the default SSL endpoint using the
+    HTTP protocol.
+
+-   Drop HTTP
+
+    Silently drops HTTP requests.
+
+1.  Specify the read response timeout value.
+
+    The default timeout is 300 seconds.
+
+2.  Click Save Changes or Discard Changes.
+
+The maximum request size is 1 GB.
+
+Configure Default Ingress Load Balancer Log Levels
+
+CloudHub 2.0 enables you to specify the default severity level of
+messages that are written to the log file for all apps deployed to the
+private space.
+
+More verbose log levels might affect performance.
+
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName]
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=clickAdvanced] . Select
+the default log level from the drop-down list. . Click Save Changes or
+Discard Changes.
+
+Configure Custom Ingress Load Balancer Log Levels
+
+CloudHub 2.0 enables you to specify the default severity level of
+messages that are written to the log file for specific IP addresses, for
+example, for troubleshooting.
+
+More verbose log levels might affect performance.
+
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName]
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=clickAdvanced] .
+Configure custom log levels:
+
++ .. Enter the IP address and select the log level from the drop-down
+list. .. Click Add IP Address to enter additional custom log levels. ..
+To remove a custom log level, click the trash can icon (Delete) for the
+entry. . Click Save Changes or Discard changes.
+
+Ingress Load Balancer Log Levels
+
+The default log level for IP address filtering is DEBUG.
+
++-----------------+-----------------------------------------------------+
+| Level           | Description                                         |
++=================+=====================================================+
+| Error           | Only error messages, such as when an exception      |
+| (Recommended)   | occurs                                              |
++-----------------+-----------------------------------------------------+
+| Debug           | Debugging messages                                  |
++-----------------+-----------------------------------------------------+
+| Trace           | Tracks application metadata such as path, headers,  |
+|                 | state, and timeline between Ingress and APIs to     |
+|                 | facilitate collaboration                            |
++-----------------+-----------------------------------------------------+
+| Info            | Informative messages                                |
++-----------------+-----------------------------------------------------+
+
+: Ingress Load Balancer Log Levels
+
+Download Ingress Load Balancer Logs
+
+To download ingress load balancer logs:
+
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName]
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=clickAdvanced] . Click
+Download Logs.
+
+Configure AWS Service Role
+
+If you have identity and access management (IAM) roles configured in
+AWS, you can associate the role with your private space. The private
+space receives the permissions from the IAM role in AWS and can access
+AWS resources. To configure this feature in AWS:
+
+-   Use the unique AWS IAM role name that Anypoint Platform generates.
+
+-   Use the organization ID for the organization in which the private
+    space was configured.
+
+-   Allow outbound traffic on port 443 to use this feature.
+
+For more information, see IAM roles.
+
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName]
+Unresolved directive in ps-config-advanced.adoc -
+include::partial$select-private-space.adoc[tag=clickAdvanced] . Click
+Enable AWS Service Role. . Click Save Changes or Discard changes.
+
++ A unique service role name is generated, and you can use this role
+configure to configure identity and access management for AWS. Role
+generation might take a few minutes. If the role name does not appear,
+refresh the page.
+
+See Also
+
+-   IAM roles in the AWS documentation

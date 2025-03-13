@@ -1,0 +1,21 @@
+1.  From Anypoint Platform, select Runtime Manager > Private Spaces.
+
+1.  Click the name of the private space to manage.
+
+1.  Click the app name.
+
+1.  From Anypoint Platform, select Runtime Manager > Applications.
+
+1.  Enter the new name and click Save.
+
+1.  In the navigation menu, click Schedules.
+
+1.  In the navigation menu, click Settings.
+
+1.  On the Settings page, click the Properties tab.
+
+1.  In the navigation menu, click Diagnostics.
+
+1.  In the navigation menu, click Logs.
+
+1.  Click the Advanced tab.

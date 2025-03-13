@@ -1,0 +1,682 @@
+Use the following sections to gather the information you’ll need to set
+up your private space. For information about private spaces, see
+ch2-private-space-about.xml.
+
+You might need to collaborate with your network administrator if you
+don’t have access to this information. In this case, share this setup
+checklist with them.
+
+Organization Entitlements and CloudHub 2.0
+
+Unresolved directive in ps-gather-setup-info.adoc -
+include::partial$include-enforcement.adoc[]
+
+Information Required to Set Up a Private Space
+
+The following list summarizes the information required to set up a
+private space. For details about each requirement, see the sections that
+follow.
+
+Private Network Setup
+
+    -   Private space name
+
+    -   Private network region
+
+    -   CIDR block
+
+    -   Internal DNS servers (optional)
+
+        -   IP addresses
+
+        -   Domains
+
+VPN Connection Type
+
+    -   VPN name
+
+    -   Remote IP
+
+    -   Dynamic Routing Type
+
+        -   Local ASN
+
+        -   Remote ASN
+
+    -   Static Routing Type
+
+        -   Local ASN (first VPN only)
+
+        -   Static IP prefixes
+
+    -   Advanced Tunnel Configuration (optional)
+
+        -   Tunnel 1
+
+            -   Inside IP CIDRs
+
+            -   Pre-shared keys
+
+        -   Tunnel 2
+
+            -   Inside IP CIDRs
+
+            -   Pre-shared keys
+
+        -   Automatic Tunnel Initiation (first VPN only)
+
+    -   Supported Gateway Devices
+
+        -   Device vendor
+
+        -   Device platform
+
+        -   Device software
+
+Redundant VPN Connection (optional)
+
+    -   Dynamic Routing Type
+
+        -   Remote IP
+
+        -   Remote ASN
+
+    -   Static Routing Type
+
+        -   Static IP prefixes
+
+    -   Advanced Tunnel Configuration (optional)
+
+        -   Tunnel 1
+
+            -   Inside IP CIDRs
+
+            -   Pre-shared keys
+
+        -   Tunnel 2
+
+            -   Inside IP CIDRs
+
+            -   Pre-shared keys
+
+    -   Supported Gateway Devices
+
+        -   Device vendor
+
+        -   Device platform
+
+        -   Device software
+
+Transit Gateway Attachment Connection Type
+
+    -   Transit gateway name
+
+    -   Transit gateway region
+
+    -   Transit gateway routing
+
+    -   MuleSoft AWS account ID
+
+    -   Resource share ID
+
+    -   Resource share owner
+
+Private Network Requirements
+
+-   Private Space Name
+
+-   Private Network Region
+
+-   simpara_title
+
+-   Connection Type
+
+-   Internal DNS Servers (Optional)
+
+Private Space Name
+
+Private space names can contain between 1 and 36 alphanumeric characters
+(a-z, A-Z, 0-9) and hyphens (-). Runtime Manager supports Unicode
+characters in private space names.
+
+The private space name appears in the list when you select a deployment
+target for your apps.
+
+You cannot rename a private space.
+
+Private Network Region
+
+The region is the Amazon region to deploy your apps to, such as usa-e1.
+
+The complete list of supported regions is:
+
+    US East (Northern Virginia)
+    US East (Ohio)
+    US West (Northern California)
+    US West (Oregon)
+    Canada (Central)
+    South America (Sao Paulo)
+    Europe (Ireland)
+    Europe (Frankfurt)
+    Europe (London)
+    Asia Pacific (Singapore)
+    Asia Pacific (Sydney)
+    Asia Pacific (Tokyo)
+
+Unresolved directive in ps-gather-setup-info.adoc -
+include::partial$create-config.adoc[tag=cidrBlock,leveloffset=+2]
+
+Unusable Private Space Network CIDR
+
+You cannot use the following list of CIDR blocks:
+
+    100.64.0.0/10
+    198.19.0.0/16
+    224.0.0.0/4
+    169.254.0.0/16
+    127.0.0.0/8
+    172.17.0.0/16
+    0.0.0.0/8
+
+Reserved Corporate CIDR (Optional)
+
+Optionally, when you create your private space and configure your
+private network, you can configure reserved CIDR blocks that correspond
+with your reserved corporate network CIDRs. When you reserve CIDRs in a
+private network configuration, Anypoint Platform does not use the blocks
+you specify when associating IP addresses with your private space. This
+prevents overlap between your corporate network CIDRs and Anypoint
+Platform infrastructure.
+
+There are two strategies for reserving CIDRs during private space
+creation:
+
+1.  Provide all reserved corporate CIDRs
+
+    Specify all CIDR blocks you plan to use within your corporate
+    network. CloudHub 2.0 automatically checks for conflicts with the
+    MuleSoft infrastructure CIDR pool and chooses options that do not
+    overlap.
+    This approach simplifies setup but requires providing a potentially
+    larger list.
+
+2.  Manually identify overlapping corporate CIDRs
+
+    Manually review the MuleSoft infrastructure CIDR pool. Then, specify
+    only the CIDRs from your corporate network CIDR list that conflict
+    with options in the MuleSoft infrastructure CIDR pool. This approach
+    minimizes the list you provide, but you must check for overlap
+    beforehand.
+    Note that the MuleSoft infrastructure CIDR pool is subject to
+    change.
+
+MuleSoft Infrastructure CIDR Pool
+
+Anypoint Platform has a list of CIDRs as an internal CIDR pool for
+provisioning private space networks. The MuleSoft infrastructure CIDR
+pool is subject to change. You can configure some of the following as
+reserved CIDR blocks, but you cannot use them as private space network
+CIDRs:
+
+    100.64.0.0/16
+    100.66.0.0/16
+    100.67.0.0/16
+    100.68.0.0/16
+
+Internal DNS Servers (Optional)
+
+If your corporate network uses internal DNS servers to resolve requests
+to custom domains, you must configure those servers to enable apps
+deployed to a private space to access internal resources that are not
+reachable from the public internet.
+
+To configure internal DNS servers, specify the IP addresses for your
+internal domain servers and the domains that you want to be resolved by
+internal DNS.
+
+The private space resolves the domains using the specified DNS server,
+enabling you to use internal host names in your private network as long
+as your applications use the FQDN to request back-end resources.
+
+Server IP Addresses
+
+The Server IP addresses identify the internal DNS servers that resolve
+requests to custom domains.
+
+To provide redundancy, you can configure multiple internal DNS servers.
+
+When configuring the IP addresses for the DNS servers, keep the
+following in mind:
+
+-   You configure DNS servers within a private space, so the server IP
+    addresses you configure must be reachable from the private space.
+
+    If the server isn’t reachable, DNS resolution fails.
+
+-   If you configure multiple servers, the private space queries any DNS
+    server in the list for the specified domains at any time, in any
+    order.
+
+-   All name servers must present the same DNS record.
+
+-   After the private space receives a valid response from any
+    configured name server, it doesn’t retry the request.
+
+    If one of the name servers doesn’t have a record for the domain, it
+    returns the response NXDOMAIN (non-existent domain). Because this
+    response is valid, the private space doesn’t send the query to the
+    other servers.
+
+Domains
+
+Domains identify the internal domains that must be accessible from the
+private space. The configured internal DNS servers resolve the specified
+domains, and the external DNS server resolves all other domains.
+
+To configure an internal domain, specify the IP address.
+
+The following internal private DNS domains are not supported:
+
+-   cloudhub.io
+
+-   mulesoft.com
+
+-   anypointdns.net
+
+-   amazon.com
+
+-   amazonaws.com
+
+-   compute.internal
+
+-   io
+
+-   com
+
+-   net
+
+-   internal
+
+-   local/domain.com
+
+You can’t add MuleSoft domains or public domains as private space
+internal DNS.
+
+The total number of characters for all configured domains is 229.
+
+Connection Type
+
+-   Virtual Private Network (VPN)
+
+-   Transit Gateway Attachment
+
+VPN Requirements
+
+Review the recommendations and limitations in ps-vpn-about.xml.
+
+-   VPN Name
+
+-   Remote IP Address
+
+-   Dynamic VPN Routing (BGP)
+
+-   Static VPN Routing
+
+-   Local ASN
+
+-   Remote ASN (dynamic routing only)
+
+-   Static IP Prefixes (static routing only)
+
+-   Inside IP CIDRs (advanced tunnel configuration only)
+
+-   Pre-shared Keys (advanced tunnel configuration only)
+
+-   Automatic Tunnel Initiation (advanced tunnel configuration only)
+
+-   Supported Gateway Devices
+
+Unresolved directive in ps-gather-setup-info.adoc -
+include::partial$create-config.adoc[tag=consolidateNetworks]
+
+VPN Name
+
+The VPN name is the name of the VPN connection.
+
+Remote IP Address
+
+The remote IP address is the public (single, static) IP address of your
+VPN endpoint.
+
+Dynamic VPN Routing (BGP)
+
+For dynamic routing, your device uses Border Gateway Protocol (BGP) to
+advertise routes to Anypoint VPN. If your device supports BGP, you can
+select dynamic routing; otherwise, select static routing.
+
+To create a dynamic VPN connection, in addition to the static VPN
+connection requirements, your VPN device must be able to:
+
+-   Establish BGP peering
+
+-   Support route-based VPNs (bind tunnels to logical interfaces)
+
+-   For IPsec, enable perfect forward secrecy (PFS) with the
+    Diffie-Hellman Phase 2 groups 2, 5, 14-24.
+
+Static VPN Routing
+
+If your gateway device doesn’t support BGP, you must use static routing.
+You might also want to use static routing if you want to provide your
+own secrets.
+
+Static routing requires you to specify the routes (subnets) in your
+network that are accessible through Anypoint VPN.
+
+To create a static VPN connection, your VPN endpoint must be able to:
+
+-   Establish IKE Security Associations using a Pre-Shared Key (PSK)
+
+-   Establish IPsec Security Associations in Tunnel mode
+
+-   Use any combination of IPsec settings that Anypoint Platform
+    supports
+
+-   Fragment IP packets before encryption
+
+    You must fragment packets that are too large to transmit.
+
+    Your gateway device must be able to fragment packets before
+    encapsulation.
+
+-   Use one Security Association (SA) pair per tunnel
+
+    Anypoint VPN supports one unique SA pair (one inbound and one
+    outbound connection) per tunnel. Some policy-based devices create an
+    SA for each ACL (access-control list) entry. In this situation, you
+    must consolidate your rules and then filter unwanted traffic.
+
+-   Use IPsec Dead Peer Detection (DPD)
+
+    DPD allows devices to rapidly identify when network conditions
+    change. You can enable DPD on the Anypoint Platform endpoint using
+    DPD Interval: 10 and DPD Retries: 3.
+
+-   Allow asymmetric routing
+
+    Asymmetric routing occurs when routing policies send traffic from
+    your network to the private space through one tunnel and traffic
+    returns from the private space through the other tunnel. The
+    Anypoint Platform VPN endpoint selects the tunnel using an internal
+    algorithm, making the return path dynamic. If your device uses an
+    active/active tunnel configuration, you must allow asymmetric
+    routing for each Anypoint VPN connection.
+
+-   For IPsec, enable perfect forward secrecy (PFS) with the
+    Diffie-Hellman Phase 2 groups 2, 5, 14-24.
+
+Local ASN
+
+The local ASN (Autonomous System Number) specifies a private ASN
+(64512–65534) to assign to the Anypoint Platform side of the VPN.
+
+Use a private ASN that is not already assigned to your network. The
+default value is 64512.
+
+You configure the local ASN for both static and dynamic routing.
+
+Unresolved directive in ps-gather-setup-info.adoc -
+include::partial$caveats.adoc[tag=localAsnNote] For subsequent VPNs that
+you create in the private space, the Local ASN option is not available
+for static routing.
+
+To change the local ASN after creating the VPN, you must delete all
+existing connections first.
+
+Remote ASN
+
+The remote ASN specifies a private ASN that corresponds to your backend.
+
+You configure the remote ASN only for dynamic routing.
+
+Use either an existing ASN assigned to your network or a private ASN
+(64512–65534) that is not already assigned to your network. The default
+value is 65001.
+
+Static IP Prefixes
+
+The static IP prefixes are IP prefixes to advertise to your private
+network in Anypoint Platform, in CIDR notation.
+
+You configure the static IP prefixes only for static routing.
+
+A maximum of 95 route table entries is allowed per private network,
+regardless of the number of VPN connections. To avoid exceeding the
+limit, consolidate networks to the fewest number possible.
+
+Advanced Tunnel Configuration (Optional)
+
+You can customize the tunnel configuration if you want to specify custom
+values for inside IP CIDRs and pre-shared keys, or if you want to
+disable automatic tunnel initiation.
+
+Any values that you don’t specify are set to the default.
+
+Inside IP CIDRs
+
+The inside IP CIDRs is the IP address range for the internal address of
+the VPN tunnel.
+
+You specify the inside IP CIDRs only for custom tunnel configuration.
+For automatic tunnel configuration, these values are auto-generated.
+
+For each tunnel, enter the IP address range for the internal address of
+the VPN tunnel.
+
+You can specify a size /30 CIDR block from the 169.254.0.0/16 range. The
+CIDR block must be unique across all private network connections.
+
+You cannot use the following list of CIDR blocks:
+
+    169.254.0.0/30
+    169.254.1.0/30
+    169.254.2.0/30
+    169.254.3.0/30
+    169.254.4.0/30
+    169.254.5.0/30
+    169.254.169.252/30
+
+Pre-shared Keys
+
+A pre-shared key (PSK) is a shared secret that was previously shared
+between two ends of a connection for the VPN tunnels.
+
+You specify the PSK only for custom tunnel configuration. For automatic
+tunnel configuration, these values are auto-generated.
+
+For static connections, your VPN endpoint uses pre-shared keys (PSKs) to
+establish IKE Security Associations.
+
+For each tunnel, enter a value of between 8-64 characters that does not
+begin with zero (0). Use only alphanumeric characters, periods (.), and
+underscores (_).
+
+Automatic Tunnel Initiation
+
+By default, VPN tunnels are initiated automatically.
+
+If you deselect this option, you must generate traffic from the customer
+gateway to establish VPN tunnels.
+
+This setting applies to all VPNs in the connection and the option isn’t
+available for subsequent redundant VPNs.
+
+Modifying the tunnel initiation after VPN creation causes all VPNs in
+this connection to restart.
+
+Supported Gateway Devices
+
+A gateway device is a physical or software appliance on your
+organization’s side of the VPN connection.
+
+Your network administrator must configure the device to work with the
+Anypoint VPN connection.
+
+The following gateway network devices are known to work with Anypoint
+VPN. If your device does not appear in the list of tested devices, check
+the requirements to verify that your device is suitable for use with
+Anypoint VPN. See Dynamic VPN Routing (BGP) and Static VPN Routing.
+
++----------------------+----------------------+-----------------------+
+| Device Vendor        | Device Platform      | Device Software       |
++======================+======================+=======================+
+| Check Point          | Security Gateway     | R77.10 or later       |
++----------------------+----------------------+-----------------------+
+| Cisco                | ASA                  | ASA 8.2 or later      |
++----------------------+----------------------+-----------------------+
+| IOS                  | Cisco IOS 12.4 or    |                       |
+|                      | later                |                       |
++----------------------+----------------------+-----------------------+
+| Dell                 | SonicWALL            | SonicOS 5.9 or later  |
++----------------------+----------------------+-----------------------+
+| Fortinet             | Fortigate 40+ Series | FortiOS 4.0 or later  |
++----------------------+----------------------+-----------------------+
+| Juniper              | J-Series Service     | JunOS 9.5 or later    |
+|                      | Router               |                       |
++----------------------+----------------------+-----------------------+
+| SRX-Series Services  | JunOS 11.0 or later  |                       |
+| Gateway              |                      |                       |
++----------------------+----------------------+-----------------------+
+| SSG                  | ScreenOS 6.1 or 6.2  |                       |
+|                      | or later             |                       |
++----------------------+----------------------+-----------------------+
+| ISG                  | ScreenOS 6.1 or 6.2  |                       |
+|                      | or later             |                       |
++----------------------+----------------------+-----------------------+
+| Netgate              | pfSense              | OS 2.2.5 or later     |
++----------------------+----------------------+-----------------------+
+| Palo Alto Networks   |                      | PANOS 4.1.2 or later  |
++----------------------+----------------------+-----------------------+
+| Yamaha               |                      | RT107e                |
++----------------------+----------------------+-----------------------+
+| RTX1200              |                      |                       |
++----------------------+----------------------+-----------------------+
+| RTX1210              |                      |                       |
++----------------------+----------------------+-----------------------+
+| RTX1500              |                      |                       |
++----------------------+----------------------+-----------------------+
+| RTX3000              |                      |                       |
++----------------------+----------------------+-----------------------+
+| SRT100               |                      |                       |
++----------------------+----------------------+-----------------------+
+| Microsoft            | Windows Server       | 2008 R2 or later      |
++----------------------+----------------------+-----------------------+
+| 2012 R2 or later     |                      |                       |
++----------------------+----------------------+-----------------------+
+| Zyxel                | Zywall Series        | 4.20 or later for     |
+|                      |                      | statically routed     |
+|                      |                      | Anypoint VPN          |
+|                      |                      | connections           |
++----------------------+----------------------+-----------------------+
+| 4.30 or later for    |                      |                       |
+| dynamically routed   |                      |                       |
+| Anypoint VPN         |                      |                       |
+| connections          |                      |                       |
++----------------------+----------------------+-----------------------+
+
+: Supported Gateway Devices
+
+Redundant VPN
+
+The default value for Remote ASN is inherited from the first VPN. You
+can change this value.
+
+Transit Gateway Attachment Requirements
+
+-   Transit Gateway Name
+
+-   Transit Gateway Region
+
+-   Transit Gateway Routing
+
+Unresolved directive in ps-gather-setup-info.adoc -
+include::partial$create-config.adoc[tag=consolidateNetworks]
+
+Before You Begin
+
+Before you can add a transit gateway to CloudHub:
+
+-   Create a transit gateway on your corporate AWS account.
+
+    See Getting started with transit gateways in the AWS documentation
+    for information about creating a transit gateway on AWS.
+
+    One transit gateway can support up to 10 VPC attachments.
+
+-   Purchase a Private Space offering with AWS Transit Gateway
+    entitlements.
+
+    The Transit Gateways page is visible in Runtime Manager to Anypoint
+    organizations that have an Anypoint VPC and VPN license.
+
+    Attaching one Anypoint VPC to an AWS Transit Gateway uses one
+    Anypoint VPN license.
+
+-   Sign in to an Anypoint Platform account with either the CloudHub 2.0
+    Network Administrator or the CloudHub 2.0 Network Viewer user
+    permission.
+
+    See Grant Permissions and Roles to Users.
+
+-   Identify the subnets in your network (in CIDR notation) that you
+    want to make accessible through the transit gateway.
+
+Transit Gateway Name
+
+Transit gateway attachment names can contain up to 255 alphanumeric
+characters (a-z, A-Z, 0-9) and hyphens (-). Runtime Manager supports
+Unicode characters in private space names.
+
+Use the same name for your transit gateway in AWS. You can change this
+name later.
+
+Transit Gateway Region
+
+The region corresponds to the location of your AWS Transit Gateway.
+
+Your private space and AWS Transit Gateway must be in the same region.
+
+Transit Gateway Routing
+
+A maximum of 95 route table entries is permitted per VPC, regardless of
+the number of transit gateway attachments. Consolidate networks to the
+fewest number possible to avoid exceeding the limit.
+
+MuleSoft AWS Account ID
+
+The MuleSoft AWS account ID varies depending on your control plane, for
+example, US Cloud or EU Cloud, and appears in Add transit gateway page
+when you select to create the transit gateway connection.
+
+When you create a resource share in AWS, you specify this ID to allow
+Anypoint Platform to access the resource share.
+
+If another team performs AWS configuration, share this MuleSoft AWS
+account ID with them.
+
+Resource Share ID and Owner
+
+The resource share ID and owner appear on the Create a resource share
+page on AWS. You use these values to verify the resource share in
+Anypoint Platform.
+
+-   The resource share ID field contains alphanumeric characters (a-z,
+    A-Z, 0-9) and hyphens (-).
+
+-   The resource share Owner field contains only numbers.
+
+See Also
+
+-   ch2-private-space-about.xml
+
+-   ps-vpn-about.xml

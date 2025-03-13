@@ -1,0 +1,296 @@
+Clustering provides scalability, workload distribution, and added
+reliability to your applications on CloudHub 2.0. This functionality is
+powered by CloudHub’s scalable load-balancing service and replica
+scale-out.
+
+You can enable clustering features on a per-application basis using the
+Anypoint Runtime Manager console when either deploying a new application
+or redeploying an existing application.
+
+High Availability and Clustering
+
+High availability refers to having multiple replicas that, unlike
+clustering, do not share data between each replica. Clustering enables
+multiple replicas to communicate with each other and share data because
+they share memory.
+
+CloudHub 2.0 Clustering and Object Store v2
+
+CloudHub 2.0 supports clustering using Mule in addition to Object Store
+v2 for Mule 4 apps. When you enable Object Store v2 in CloudHub 2.0,
+note that it is rate limited. For more information, see
+object-store::index.xml.
+
+You do not need to configure your apps to use Object Store in CloudHub
+2.0. Additionally, Mule 4 apps support Object Store v2, which can be
+enabled from Anypoint Runtime Manager console.
+
+Before You Begin
+
+Clustering requires:
+
+reuse::partial$billing/pricing.adoc
+
+-   A CloudHub Enterprise or Partner account type that enables you to
+    use this feature.
+
+-   Familiarity with deploying applications using Runtime Manager.
+
+Replica Scale-out
+
+CloudHub 2.0 enables you to select vCore options for your application,
+providing horizontal scalability. This fine-grained control over
+computing capacity provisioning gives you the flexibility to scale up
+your application to handle higher loads (or scale down during low-load
+periods) at any time.
+
+You can deploy your application with up to 8 replicas, or you can deploy
+with up to 16 replicas if you have the Anypoint Integration Advanced
+package or a Platinum or Titanium subscription to Anypoint Platform. To
+ensure that you have sufficient resources, see CloudHub 2.0 Replicas.
+
+Replica scale-out also adds additional reliability. Mule runtime engine
+(Mule) automatically distributes multiple replicas for the same
+application across two or more data centers for maximum reliability.
+
+When deploying your application to two or more replicas, you can
+distribute workloads across these instances of Mule. CloudHub provides
+the following an HTTP load balancing service that automatically
+distributes HTTP requests among your assigned replicas.
+
+Batch jobs only run on a single replica at a time, and cannot be
+distributed across multiple replicas. If Mule restarts in the same
+deployment, the status persists and the batch continues processing. If
+the entire application is updated or redeploying while the batch is
+running, the rest of the batch job doesn’t continue. The main solution
+for persistent batch jobs in CloudHub 2.0 is to use
+object-store::index.xml.
+
+In Kubernetes, a Horizontal Pod Autoscaler (HPA) automatically updates a
+workload resource to scale the workload to match demand. Horizontal
+scaling automatically deploys more pods as a response to an increased
+load. As a result of these regular autoscaling operations, an
+application can be changed to a new replica without user action.
+
+Enable Clustering Features
+
+You can enable and disable either or both of cluster mode and horizontal
+autoscaling in one of two ways:
+
+-   When you deploy an application to CloudHub 2.0 for the first time
+    using Runtime Manager:
+
+    -   Use the Replica Count and Replica Size drop-down menus on the
+        Runtime tab to select the vCore options and configure the
+        computing power you need.
+
+    -   Check the Run in Runtime Cluster Mode in the Runtime Options
+        section to enable Mule clustering across each replica of the
+        application. This option requires at least two replicas.
+
+-   For previously deployed applications, use the Replica Count and
+    Replica Size drop-down menus on the Deployment Target tab.
+
+    -   Check the Run in Runtime Cluster Mode in the Runtime Options
+        section to enable Mule clustering across each replica of the
+        application. This option requires at least two replicas.
+
+See CloudHub 2.0 Replicas for more information about deploying to
+multiple replicas.
+
+If your application is already deployed, you must redeploy it for your
+new settings to take effect.
+
+How High Availability is Implemented
+
+HTTP load balancing is implemented by an internal reverse proxy server.
+Requests to the application (domain) URL are automatically load balanced
+between all the application’s replica URLs.
+
+How Clustering is Implemented
+
+When you enable clustering, all the replicas of a Mule application act
+as a unit. A cluster is a virtual server composed of multiple replicas.
+The nodes in a cluster communicate and share information through a
+distributed shared memory grid. Thus, data is replicated across memory
+in different replicas.
+
+For more information, see
+mule-runtime::mule-high-availability-ha-clusters.xml.
+
+Use Cases
+
+You can combine clustering features in a single application.
+
++----------------------+----------------------+-----------------------+
+| Use Case             | Suggested Clustering | Implications          |
+|                      | Configuration        |                       |
++======================+======================+=======================+
+| You want to scale    | Number of Replicas:  | -   Application       |
+| out your             | Two or more          |     performance is    |
+| application, but you | Clustering not       |     not affected by   |
+| are satisfied with   | enabled              |     queue latency.    |
+| the existing highly  |                      |                       |
+| available CloudHub   |                      | -   No need to        |
+| 2.0 architecture in  |                      |     configure your    |
+| terms of preventing  |                      |     application to    |
+| service interruption |                      |     support queues.   |
+| or message loss. You |                      |                       |
+| agree with having    |                      | -   Application       |
+| the mule schedules   |                      |     schedules are     |
+| executed multiple    |                      |     executed on all   |
+| times                |                      |     replicas          |
+| simultaneously.      |                      |     independently.    |
+| Ideally, the         |                      |                       |
+| schedule flows are   |                      | -   Object Stores are |
+| idempotent to avoid  |                      |     not shared        |
+| any conflicts.       |                      |     between replicas. |
+|                      |                      |                       |
+|                      |                      | -   If the object is  |
+|                      |                      |     writtent to one   |
+|                      |                      |     relica, the other |
+|                      |                      |     replicas won’t    |
+|                      |                      |     see the object,   |
+|                      |                      |     unless Cloud      |
+|                      |                      |     Object Store is   |
+|                      |                      |     used.             |
+|                      |                      |                       |
+|                      |                      | -   If one data       |
+|                      |                      |     center            |
+|                      |                      |     experiences an    |
+|                      |                      |     outage, your      |
+|                      |                      |     replicas are      |
+|                      |                      |     available in a    |
+|                      |                      |     different data    |
+|                      |                      |     center.           |
++----------------------+----------------------+-----------------------+
+| You have a           | Number of Replicas:  | -   The application   |
+| high-stakes process  | One                  |     can experience    |
+| for which you need   | Clustering enabled   |     some queue        |
+| to protect against   |                      |     latency.          |
+| message loss, but    |                      |                       |
+| you are not          |                      | -   Configure your    |
+| experiencing issues  |                      |     application to    |
+| with handling        |                      |     support queues    |
+| processing load and  |                      |     before deploying. |
+| are OK with some     |                      |                       |
+| service interruption |                      | -   Application       |
+| in the case of a     |                      |     schedules are     |
+| data center outage.  |                      |     executed once on  |
+|                      |                      |     a single replica. |
+|                      |                      |                       |
+|                      |                      | -   Application       |
+|                      |                      |     schedule          |
+|                      |                      |     execution can be  |
+|                      |                      |     missed if the     |
+|                      |                      |     application       |
+|                      |                      |     runtime is not    |
+|                      |                      |     available at the  |
+|                      |                      |     time of           |
+|                      |                      |     execution.        |
+|                      |                      |                       |
+|                      |                      | -   If the data       |
+|                      |                      |     center in which   |
+|                      |                      |     your replica      |
+|                      |                      |     operates          |
+|                      |                      |     experiences an    |
+|                      |                      |     outage, CloudHub  |
+|                      |                      |     2.0 automatically |
+|                      |                      |     migrates your     |
+|                      |                      |     application to    |
+|                      |                      |     another           |
+|                      |                      |     availability      |
+|                      |                      |     zone. You can     |
+|                      |                      |     experience        |
+|                      |                      |     downtime during   |
+|                      |                      |     the migration;    |
+|                      |                      |     however, your     |
+|                      |                      |     queues ensure     |
+|                      |                      |     zero message      |
+|                      |                      |     loss.             |
++----------------------+----------------------+-----------------------+
+| You have a           | Number of Replicas:  | -   The application   |
+| high-stakes process  | Two or more          |     can experience    |
+| for which you need   | Clustering enabled   |     some queue        |
+| to protect against   |                      |     latency.          |
+| message loss, avoid  |                      |                       |
+| any chance of        |                      | -   You need to       |
+| service              |                      |     configure your    |
+| interruption, and    |                      |     application to    |
+| handle large         |                      |     support queues    |
+| processing loads.    |                      |     before deploying. |
+|                      |                      |                       |
+|                      |                      | -   Application       |
+|                      |                      |     schedules are     |
+|                      |                      |     executed only     |
+|                      |                      |     once on the       |
+|                      |                      |     primary replica.  |
+|                      |                      |                       |
+|                      |                      | -   Application       |
+|                      |                      |     schedules can be  |
+|                      |                      |     missed during the |
+|                      |                      |     lead election.    |
+|                      |                      |                       |
+|                      |                      | -   If one data       |
+|                      |                      |     center            |
+|                      |                      |     experiences an    |
+|                      |                      |     outage, your      |
+|                      |                      |     replicas are      |
+|                      |                      |     automatically     |
+|                      |                      |     distributed to    |
+|                      |                      |     ensure            |
+|                      |                      |     redundancy.       |
++----------------------+----------------------+-----------------------+
+| You have an          | Number of Replicas:  | -   Application       |
+| application that     | One                  |     performance is    |
+| does not have any    | Clustering not       |     not affected by   |
+| special requirements | enabled              |     queue latency.    |
+| regarding either     |                      |                       |
+| processing load or   |                      | -   You don’t need to |
+| message loss.        |                      |     configure your    |
+|                      |                      |     application to    |
+|                      |                      |     support queues.   |
+|                      |                      |                       |
+|                      |                      | -   Application       |
+|                      |                      |     schedules are     |
+|                      |                      |     executed once on  |
+|                      |                      |     a single replica. |
+|                      |                      |                       |
+|                      |                      | -   Object Stores are |
+|                      |                      |     replicated and    |
+|                      |                      |     shared with each  |
+|                      |                      |     replica.          |
+|                      |                      |                       |
+|                      |                      | -   All replicas can  |
+|                      |                      |     read objects      |
+|                      |                      |     written by        |
+|                      |                      |     another replica,  |
+|                      |                      |     with or without   |
+|                      |                      |     Cloud Object      |
+|                      |                      |     Store.            |
+|                      |                      |                       |
+|                      |                      | -   If the data       |
+|                      |                      |     center in which   |
+|                      |                      |     your replica      |
+|                      |                      |     operates          |
+|                      |                      |     experiences an    |
+|                      |                      |     outage, CloudHub  |
+|                      |                      |     2.0 automatically |
+|                      |                      |     migrates your     |
+|                      |                      |     application to    |
+|                      |                      |     another           |
+|                      |                      |     availability      |
+|                      |                      |     zone; however,    |
+|                      |                      |     you can           |
+|                      |                      |     experience some   |
+|                      |                      |     downtime and      |
+|                      |                      |     message loss      |
+|                      |                      |     during the        |
+|                      |                      |     migration.        |
++----------------------+----------------------+-----------------------+
+
+See Also
+
+-   ch2-architecture.xml
+
+-   object-store::index.xml

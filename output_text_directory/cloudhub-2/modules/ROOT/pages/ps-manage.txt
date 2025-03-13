@@ -1,0 +1,221 @@
+Use Anypoint Runtime Manager to manage private spaces, such as adding
+and removing a route from the route table or detaching a transit gateway
+from the private space.
+
+Add or Remove a Route from the Route Table
+
+Routes determine how to direct traffic from your private space, for
+example, to the public internet or through a connection (VPN or transit
+gateway).
+
+You might want to add a route to enable a new subnet to be accessible or
+remove a route if you no longer want a subnet to be accessible through
+the transit gateway.
+
+When you create a new private space, you can remove the default routes
+that MuleSoft provides. However, when you change the default route, your
+private space might experience downtime. If the X icon doesn’t appear
+for a route, you can’t remove it.
+
+You cannot remove the MuleSoft-defined routes for existing private
+spaces created before March 9, 2023. You must create and configure a new
+private space to remove the default routes that MuleSoft defines.
+MuleSoft defines other routes, such as control plane traffic routes,
+that you cannot view or remove from the route table. Note that Anypoint
+MQ, ObjectStore v2, and API Manager require internet access from your
+network.
+
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Network tab, in the Private Network section, click Route Table:
+
++ The route table shows all routes for the private space.
+
++
+
+-   Add a route by entering the subnet in CIDR notation, selecting the
+    connection, and clicking Add Route:
+
+    You can’t add a route that matches a priority route (a route that’s
+    used by your private network).
+
+    Routes can be used by only one connection at a time. If you enter a
+    non-local/Internet Gateway (IGW) route, CloudHub 2.0 warns that the
+    route is being used by another connection.
+
+    Routes should not overlap with existing routes. CloudHub 2.0 warns
+    if you enter a route that overlaps with another route in the route
+    table.
+
+-   Remove a route by clicking the X icon for a row in the table and
+    then clicking Delete to confirm.
+
+    If the X icon doesn’t appear for a route, you can’t remove it.
+
+    You can remove routes for static VPN connections.
+
+1.  Click Done to close the route table.
+
+Anypoint Platform submits the new route to AWS.
+
+You cannot add 169.254.168.0/22 (reserved by AWS) as a route
+destination.
+
+Rename a Connection
+
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Network tab, in the Connections section, click the Connections
+menu (…​) and select Rename: Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=renameItem]
+
+Create Redundant VPN
+
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Network tab, in the Connections section, click the VPN menu (…​)
+and select Create Redundant VPN:
+
++ <screenshot> . Follow the steps in Create a Redundant VPN.
+
+Rename a VPN
+
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Network tab, in the Connections section, click the VPN menu (…​)
+and select Rename: Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=renameItem]
+
+Change VPN Connection Settings
+
+You can change the tunnel initiation behavior after configuring the VPN
+connection.
+
+This setting applies to all VPNs in this connection and is enabled by
+default.
+
+Modifying the tunnel initiation after VPN creation causes all VPNs in
+this connection to restart.
+
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Network tab, in the Connections section, click the VPN menu (…​)
+and select Connection Settings: . On the Connection Settings page, you
+can:
+
++ * Enter a new name for the VPN connection. * Expand Advanced Options
+to change the Automatic Tunnel Initiation option.
+
++ Enable this option to specify that VPN starts up automatically.
+
++ If you deselect this option, you must generate traffic from the
+customer gateway to establish VPN tunnels. . Click Save or Cancel to
+close the Connection Settings window.
+
++ Modifying the Automatic Tunnel Initiation option restarts all VPNs in
+the connection.
+
+View VPN Status
+
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Network tab, in the Connections section, click the VPN menu (…​)
+and select View Details: . Click X to close the VPN Details window.
+
+Enable VPN logs
+
+You can enable VPN logs to be directly accessible by MuleSoft support
+engineers. This shortens the process for obtaining the logs from AWS.
+
+1.  For VPN connections created after March 8, 2023, VPN logs are
+    enabled by default upon creation.
+
+2.  For existing VPN connections:
+
+    a.  You can enable VPN logs via PATCH call to the following existing
+        endpoint:
+
+        https://anypoint.mulesoft.com/runtimefabric/api/organizations/{{org-id}}/privatespaces/{{ps-id}}/connections/{{connection-id}}/vpns/{{vpn-id}}.
+
+        The payload to enable logs for VPNs with two tunnels without
+        making other changes is
+        {"vpnTunnels":[{"isLogsEnabled": true}, {"isLogsEnabled": true}]}.
+
+        The isLogsEnabled flag can only be set to true; otherwise, the
+        API returns a 400 error.
+
+    b.  Any updates you make to an existing VPN after March 8, 2023
+        enables the VPN logs to be directly accessible by MuleSoft
+        Support Engineers.
+
+Enabling this feature speeds up the process for obtaining VPN logs from
+AWS, as the MuleSoft support team can download them directly, with no
+need to raise an AWS support ticket.
+
+Delete a VPN
+
+Deleting the last VPN in a connection removes the entire connection.
+
+You can’t undo this action.
+
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Network tab, in the Connections section, click the VPN menu (…​)
+and select Delete: . Click Delete to confirm the deletion or Cancel.
+
+Unresolved directive in ps-manage.adoc -
+include::partial$transit-gateway.adoc[tag=renameTGW]
+
+Unresolved directive in ps-manage.adoc -
+include::partial$transit-gateway.adoc[tag=detachTGW]
+
+Unresolved directive in ps-manage.adoc -
+include::partial$transit-gateway.adoc[tag=deleteTGW]
+
+Delete a Private Network
+
+You can’t delete a private network if any apps are deployed to it or if
+any connections exist.
+
+You can’t undo this action.
+
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Network tab, click the Private Network menu (…​) and select
+Delete: . Click Delete to confirm the deletion.
+
+Delete a Private Space
+
+You can’t delete a private space if it has any related private network,
+VPNs, or transit gateway attachments.
+
+You can’t undo this action.
+
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-manage.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+Click the Private Space menu (…​) and select Delete.
+
++ image::ps-delete.png[Delete option in the Private Space menu] . Click
+Delete private space to confirm the deletion or Cancel.
+
+See Also
+
+-   Deleting a resource share in the AWS documentation

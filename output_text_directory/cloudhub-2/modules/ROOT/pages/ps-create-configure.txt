@@ -1,0 +1,110 @@
+To extend your network to Anypoint Platform, create a private space, a
+virtual, private, and isolated network hosted in CloudHub 2.0, to deploy
+your apps to.
+
+Create a Private Space
+
+Unresolved directive in ps-create-configure.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+
++ The page shows any private spaces associated with the selected
+business group. . Click Create private space. . Enter a name for your
+private space and click Create.
+
++ You cannot rename your private space after you create it.
+
+Create a Private Network
+
+You can’t change the private network configuration after it’s created.
+To change the configuration, delete the private space and create it
+again. See ps-manage.xml.
+
+Unresolved directive in ps-create-configure.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+
++ The page shows any private spaces associated with the selected
+business group. Unresolved directive in ps-create-configure.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Network tab, click Create Private Network. . On the Create
+Private Network page:
+
++
+
+a.  Select the region where you want your apps to run.
+
+b.  Enter the CIDR block, which is the range of IP addresses that your
+    apps can use.
+
+c.  Optionally, reserve your corporate private network’s CIDRs to
+    connect to your private space by entering them in a comma-separated
+    list.
+
+    When you reserve your corporate CIDRs, Anypoint Platform creates IPs
+    for your private space without using these blocks to prevent
+    conflicts with your corporate private network.
+
+d.  Click Create.
+
+The private network can take up to 30 minutes to create.
+
++ While the network is created, you can create a connection to an
+external network. . After the network creation succeeds, you can deploy
+an application to test the private network connection.
+
+If the private network creation fails, delete it and click Create
+Private Network to try again.
+
+Resolve Private Domains in Your Internal Network
+
+If your corporate network uses internal DNS servers to resolve requests
+to custom domains, configure the private space with these IP addresses
+and domain names. The private space uses your internal DNS to resolve
+internal host names of your private network (make sure your applications
+call the backend resources by FQDN).
+
+Unresolved directive in ps-create-configure.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-create-configure.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Network tab, click the Configure link for Internal DNS servers. .
+Enter the (comma-separated) server IP addresses for your internal DNS
+servers. . Enter the (comma-separated) domain addresses to be resolved
+by internal DNS. . Click Save.
+
+After you configure internal DNS, the Network tab indicates the number
+of configured server IP addresses and domains:
+
+[Internal DNS configuration in the Private Network section]
+
+You can’t add MuleSoft domains or public domains as private space
+internal DNS.
+
+Create a Connection to an External Network
+
+After you create your private network, connect it to an external network
+using a VPN or transit gateway attachment.
+
+Unresolved directive in ps-create-configure.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-create-configure.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Network tab, click Create Connection. . On the Create Connection
+page, select the connection type, enter the VPN or transit
+gatewayconnection name, and click Next.
+
++ Depending on the connection type you selected:
+
++ VPN: Follow the steps in ps-create-configure-vpn.xml. Transit Gateway:
+Follow the steps in ps-create-configure-tgw.xml.
+
+See Also
+
+-   ps-gather-setup-info.xml
+
+-   ps-create-configure-vpn.xml
+
+-   ps-create-configure-tgw.xml
+
+-   ps-configure.xml
+
+-   ps-manage.xml

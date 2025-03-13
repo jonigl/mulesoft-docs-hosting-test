@@ -1,0 +1,5 @@
+-   ch2-view-logs.xml
+
+-   ch2-view-diag.xml
+
+-   ch2-config-app-alerts.xml

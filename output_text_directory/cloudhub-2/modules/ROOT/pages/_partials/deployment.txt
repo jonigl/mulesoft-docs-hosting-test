@@ -1,0 +1,211 @@
+You can configure property values, such as specifying the environment or
+setting passwords and usernames, during app deployment.
+
+For information about configuring app properties, see:
+
+-   ch2-manage-props.xml
+
+-   ch2-protect-app-props.xml
+
+Placeholders
+
+The subdomain and path support the following optional lowercase
+placeholders:
+
++----------------------+-----------------------------------------------+
+| Placeholder          | Resolves to                                   |
++======================+===============================================+
+| app-name             | Name of the app that you specified in the     |
+|                      | Application Name field when you deploy the    |
+|                      | app                                           |
++----------------------+-----------------------------------------------+
+| business-group-id    | Business group ID associated with the app     |
++----------------------+-----------------------------------------------+
+| environment-id       | Environment that you deploy the app to        |
++----------------------+-----------------------------------------------+
+
+Paths must start and end with an alphanumeric character and can contain
+only alphanumeric characters, hyphens, and underscores.
+
+Subdomains must start and end with an alphanumeric character and can
+contain only alphanumeric characters (a-z, A-Z, 0-9), hyphens (-),
+underscores (-), and periods (.).
+
+Application Names
+
+The application name you specify can contain between 3 and 42
+alphanumeric characters (a-z, A-Z, 0-9) and dashes (-). They cannot
+contain spaces or other characters. The application name must start with
+a letter (a-z or A-Z). It cannot start with a number or dash and it
+cannot end with a dash.
+
+To ensure that names are unique and avoid domain conflicts, CloudHub 2.0
+adds a six-character unique-id to the application name that you specify
+in the public endpoint URL.
+
+The application name identifies your application not only in Runtime
+Manager but also in the public cloudhub.io domain. For example, an
+application named myapp is accessible at
+http://myapp-unique-id.shard.usa-w2.cloudhub.io. You must have unique
+application names for each deployment target.
+
+To further customize your app names, you can create a naming convention.
+For example, you could prepend your company name and department to all
+application names, such as mycompany-mydept-myapp. You can then add DNS
+records to hide the complex application name. For example, you might
+route requests to myapp.mycompany.com to
+mycompany-mydept-myapp-unique-id.shard.region.cloudhub.io.
+
+Make application file names as unique as possible. An app cannot be
+deployed if it shares the same name as an asset in Exchange.
+
+Configure Logging for the App
+
+Logging is enabled by default for apps deployed to CloudHub 2.0.
+
+Disable or Enable Logging
+
+To disable or reenable logging for the app:
+
+1.  Click the Logging tab.
+
+2.  Deselect or select the Forward application logs to Anypoint Platform
+    option.
+
+3.  Click Apply Changes.
+
+If you disable logging, the Logs heading still appears in the Runtime
+Manager navigation menu, but application logs are not collected.
+
+Configure Log Levels and Categories
+
+To configure additional log levels and categories to include in logs:
+
+1.  Click the Monitoring tab.
+
+2.  Select the log level:
+
+    -   INFO: Informative messages
+
+    -   DEBUG: Debugging messages
+
+    -   WARNING: Warning messages
+
+    -   ERROR: Error messages, such as when an exception occurs
+
+    -   FATAL: Fatal messages for when an application fails
+
+3.  Optionally, set the log level for specific a Java package class by
+    selecting the log level, entering the package.name, and pressing the
+    Enter key.
+
+4.  Click Apply Changes.
+
+Enable Trace Data Collection
+
+reuse::partial$billing/pricing.adoc
+
+Traces enable you to understand the path of a transaction in the
+MuleSoft ecosystem by providing full visibility into the execution path
+of API calls or application transactions. When you enable trace data
+collection for an app, Anypoint Platform collects and exposes tracing
+information from Mule runtime engine in the OpenTelemetry standard,
+enabling you to export it using the Anypoint Monitoring Telemetry
+Exporter.
+
+You can enable trace data collection for your CloudHub 2.0 applications
+running on Mule version 4.6 or later. You can’t enable trace data
+collection using the Mule Maven plugin, Anypoint CLI, or Anypoint
+Studio. You can enable trace data collection using only the UI and API.
+
+To enable trace data collection for an app:
+
+1.  Click the Monitoring tab.
+
+2.  Select the Enable tracing checkbox.
+
+3.  Click Deploy Application if you are enabling the feature for a new
+    deployment, or Apply Changes if you are editing an existing
+    application.
+
+Once you enable tracing, and redeploy your application, the Runtime
+Manager backend starts instrumenting traces for your application.
+
+Specify Runtime Options
+
+Click the Runtime tab and specify the following options:
+
+Runtime version
+
+    Specifies the Mule runtime engine version. Versions 4.3.x, 4.4.x,
+    4.5.x, and 4,6.x are supported.
+
+Release Channel
+
+    Starting with Mule 4.5, MuleSoft introduces two new release
+    channels, Edge and Long-term Support (LTS).
+
+    For new applications, the Edge channel is selected by default in the
+    Release Channel drop-down menu.
+
+    For existing applications using a legacy version, the Release
+    Channel drop-down list is selected as None by default. Use the
+    Release Channel drop-down list to select the desired release
+    channel.
+
+    For existing applications using an Edge version, the Release Channel
+    drop-down list is selected as Edge. The Runtime Version dropdown
+    list indicates if there is an update available, as well as the
+    previous and latest version of the application. Use the Release
+    Channel drop-down list to change to a legacy version.
+
+    For existing applications using an Edge or an LTS version on
+    extended support, a warning message appears indicating the version’s
+    EOL.
+
+    cloudhub::partial$mule-runtime-eos-note.adoc
+
+Java Version
+
+    Select the Java version for your application. For more information,
+    visit general::java-support.xml.
+
+Replica size
+
+    Specifies the number of vCores in the replica to run your
+    application.
+
+    For information on replica sizes, memory, and storage, see CloudHub
+    2.0 Replicas. CloudHub 2.0 limits the replica size per deployment to
+    four vCores.
+
+Replica Count
+
+    Specifies the number of replicas, or instances, of the application
+    to deploy.
+
+    A minimum of two replicas is required for high availability.
+
+Run in Runtime Cluster Mode
+
+    Enables Mule clustering across each replica of the application.
+
+    This option requires at least two replicas.
+
+Use Object Store V2
+
+    You can select Object Store v2 as the implementation for Mule 3 and
+    Mule 4 by checking the Use Object Store V2 checkbox.
+
+Deployment model
+
+    -   Rolling update:
+
+        -   Maintains availability by incrementally updating replicas.
+
+    -   Recreate:
+
+        -   Terminates replicas before redeployment.
+
+        -   Redeployment is faster and doesn’t require additional
+            resources.

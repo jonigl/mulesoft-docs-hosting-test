@@ -1,0 +1,24 @@
+After creating the private space, private network, and connections to
+external networks, you can configure the private space by:
+
+-   ps-config-ssl-endpoints.xml
+
+-   ps-config-domains.xml
+
+-   ps-config-fw-rules.xml
+
+-   ps-config-env.xml
+
+-   ps-config-advanced.xml
+
+See Also
+
+-   ps-gather-setup-info.xml
+
+-   ps-create-configure.xml
+
+-   ps-create-configure-vpn.xml
+
+-   ps-create-configure-tgw.xml
+
+-   ps-manage.xml

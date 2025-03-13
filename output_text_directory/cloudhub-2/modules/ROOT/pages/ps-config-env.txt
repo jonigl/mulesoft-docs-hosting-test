@@ -1,0 +1,141 @@
+Before deploying to a private space, you can specify environments and at
+least one business group to associate with it. This association
+specifies in which environments the private space appears as a target
+deployment in the Deployment Target list when deploying an app. For
+information, see ch2-deploy-private-space.xml.
+
+You can associate a private space with the production and sandbox
+environments in the business group, and its child business groups, that
+it’s registered with or with a subset of business groups.
+
+By default, a private space is associated with all sandbox environments
+in its business groups.
+
+Associate Business Groups and Environments
+
+If you have the CloudHub Network Administrator permission, associate
+environments in the business group or groups with the private space:
+
+Unresolved directive in ps-config-env.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-config-env.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+Click the Environments tab to: ??? ???
+
+Associate Business Groups
+
+1.  Select the business groups from the drop-down list:
+
+    -   This business group and its children
+
+        This option allows you to select either all environments, all
+        sandbox environment or all production environments for the
+        selected business group and all its children.
+
+    -   Selected business groups
+
+        Enter the business group name in the Add business group field
+        and select it from the list. This option allows you to select
+        specific environments for specific business groups.
+
+        The list includes the business group and its child business
+        groups to which the private space is registered and that have
+        not yet been added.
+
+    1.  Click Save Changes or Discard Changes to discard or confirm the
+        association.
+
+    [Select the business group from the drop-down list.]
+
+Associate Environments
+
+1.  Select the environments from the drop-down list:
+
+    -   All Environment
+
+        Associates the private space with all sandbox and production
+        environments in the business group and all its children, or in
+        specific business groups.
+
+    -   All Sandbox Environments
+
+        Associates the private space with only sandbox environments in
+        the business group and all its children, or in specific business
+        groups.
+
+    -   All Production Environments
+
+        Associates the private space with only production environments
+        in the business group and all its children, or in specific
+        business groups.
+
+    -   Select Environments Manually
+
+        Allows you to associate the private space with specific
+        environments in specific business groups.
+
+        -   Check the Sandbox or Production box to bulk select all
+            sandbox or production environments in specific business
+            groups.
+
+        -   Check the box for each specific subenvironment to
+            individually select the desired environments in specific
+            business groups.
+
+    1.  Click Save Changes or Discard Changes to discard or confirm the
+        association.
+
+    [Select the environments from the drop-down list.]
+
+Add or Remove Business Groups
+
+You can add or remove business groups for your private space:
+
+To add new business groups, use the Add business group field.
+
+To remove a business group, click the trash can icon for the entry.
+
+[Delete icon on the Environments tab]
+
+Manage Resources for a Business Group
+
+If you have the Organization Administrator permission, view or manage
+resources associated with a business group:
+
+1.  Log in to Anypoint Platform using an account that has the
+    Organization Administrator permission.
+
+2.  In the navigation bar or the main Anypoint Platform page, click
+    Access Management.
+
+3.  In the Access Management navigation menu, click Business Groups.
+
+4.  Click the Settings tab.
+
+5.  In the Resources section, view or modify the allocation for a
+    resource, such as Production vCores.
+
+6.  Click Save Changes or Discard Changes.
+
+If Business Groups is not in the Access Management navigation menu:
+
+1.  Log in to Anypoint Platform using an account that has the
+    Organization Administrator permission.
+
+2.  In the navigation bar or the main Anypoint Platform page, click
+    Access Management.
+
+3.  In the Access Management navigation menu, click Organization.
+
+4.  Click the name of the business group you want to modify.
+
+5.  View or modify the allocation for a resource, such as Production
+    vCores.
+
+6.  Click Save Changes or Discard Changes.
+
+See Also
+
+-   ch2-deploy-private-space.xml
+
+-   access-management::index.xml

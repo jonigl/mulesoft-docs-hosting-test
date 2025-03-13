@@ -1,0 +1,57 @@
+Rename a Transit Gateway Attachment
+
+You might want to rename a transit gateway attachment to match the
+attachment name in AWS.
+
+To rename a transit gateway attachment:
+
+Unresolved directive in transit-gateway.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in transit-gateway.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Network tab, in the Connections section, click the transit
+gateway menu (…​) and select Rename: Unresolved directive in
+transit-gateway.adoc -
+include::partial$select-private-space.adoc[tag=renameItem]
+
+Detach a Transit Gateway from the Private Space
+
+You might want to detach a transit gateway attachment for the following
+reasons:
+
+-   If you reject an attachment in AWS, the transit gateway attachment
+    appears as Rejected in Anypoint Platform. In this case, you must
+    remove the attachment before trying to attach it again.
+
+-   If an attachment is deleted on AWS, you can remove the attachment
+    from Anypoint Platform.
+
+Removing a transit gateway attachment also deletes any associate routes.
+The resource share on AWS remains unaffected so you can readd the
+transit gateway without creating a new one. However, detaching a transit
+gateway from a private space also deletes the attachment in AWS.
+
+The transit gateway appears under Add a transit gateway if you only
+detach it and do not delete it from your organization. Any apps deployed
+to the private space continue to run, but they are no longer connected
+to your Amazon VPCs and VPNs.
+
+To detach the transit gateway:
+
+Unresolved directive in transit-gateway.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in transit-gateway.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Network tab, in the Connections section, click the transit
+gateway menu (…​) and select Detach: . At the confirmation prompt, click
+Detach.
+
++ Detaching a transit gateway might take several minutes.
+
+Delete a Transit Gateway
+
+To completely remove the transit gateway from your Anypoint Platform
+organization, use the delete transit gateway API call
+(DELETE <>/organizations/:orgId/transitgateways/:tgw-id) and delete the
+resources share on AWS. For information, see Deleting a resource share
+in the AWS documentation.

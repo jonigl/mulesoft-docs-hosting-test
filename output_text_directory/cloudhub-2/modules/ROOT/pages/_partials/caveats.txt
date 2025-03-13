@@ -1,0 +1,12 @@
+Although the local ASN isn’t used for static routing, you must specify
+this value when you create the first VPN because it is required for any
+future VPN connections using BGP for this private space.
+
+You cannot change the name of an app after you deploy it. To change the
+name, you must delete and redeploy the app using the new name.
+
+CloudHub 2.0 supports Mule runtime engine versions 4.3.x and later. Mule
+3.x is not supported.
+
+Runtime Manager doesn’t support deploying an application to CloudHub 2.0
+or Runtime Fabric if the asset was previously soft-deleted in Exchange.

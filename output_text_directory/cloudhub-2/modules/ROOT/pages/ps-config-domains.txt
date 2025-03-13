@@ -1,0 +1,364 @@
+CloudHub 2.0 uses Transport Layer Security (TLS) contexts to encrypt
+inbound traffic to the private space.
+
+TLS contexts enable your apps to be reached at custom domains and,
+optionally, enable partial client authentication.
+
+Each private space includes one TLS context by default (for traffic to
+cloudhub.io), which can’t be removed. The default certificate renews
+automatically and requires no action from the user. You can create
+additional TLS contexts as required.
+
+The TLS contexts that you configure for the private space define the
+domains that are available when deploying apps to the private spaces.
+See ch2-config-endpoints-paths.xml.
+
+TLS Contexts
+
+Each TLS context includes a keystore and an optional truststore.
+
+To create a TLS context:
+
+1.  Upload the keystore.
+
+2.  Upload the truststore (optional).
+
+3.  Accept the default ciphers or select ciphers to add or remove.
+
+Keystore
+
+A keystore is a repository of security certificates (either
+authorization certificates or public key certificates), along with their
+corresponding private keys used, for example, in SSL encryption.
+
+The keystore allows communication to your app using custom domains.
+
+CloudHub 2.0 supports the following keystore types:
+
+PEM (Privacy-Enhanced Mail)
+
+    A PEM file is a Base64-encoded ASCII file with a .cer, .crt, or .pem
+    extension.
+
+    For PEM, the keystore consists of:
+
+    -   Public certificate
+
+    -   Private key
+
+    -   Certificate Authority (CA) path file (optional)
+
+    The keystore in PEM format uses TLS default values.
+
+JKS (Java Keystore)
+
+    A JKS file is a repository for authorization or public key
+    certificates and does not store secret keys.
+
+    Use this option to upload a JKS file and use TLS default values.
+    With this option, you can’t change the default values for TLS
+    versions, ciphers, and other TLS configuration options.
+
+If you find any issues with your certificates after uploading a JKS
+keystore, use a PEM file instead.
+
+Truststore
+
+A truststore is a set of client certificates that the server checks
+against to enforce partial client authentication. The optional
+truststore identifies trusted external clients or certificate
+authorities (CAs).
+
+To enable partial client authentication, configure a truststore. If a
+truststore is not configured, partial client authentication is disabled.
+
+CloudHub 2.0 accepts truststore files in PEM formats.
+
+DNS Targets
+
+Configure a DNS target to allow clients to reach your applications from
+within or outside of the private network.
+
+Public DNS targets allow external clients to reach your applications at
+custom domains. Private DNS targets can only be reached from inside a
+private network, or through VPN or transit gateway connections. Use them
+with internal DNS or allowlists in your connected external networks, so
+clients in those networks may make requests to your applications.
+
+Ciphers
+
+When you add the TLS context, you can select the ciphers to use with the
+TLS context.
+
+Before You Begin
+
+1.  Generate a keystore:
+
+    -   PEM
+
+    -   JKS
+
+2.  Generate a truststore (if you want to enable partial client
+    authentication).
+
+3.  Create DNS records for your domains.
+
+    To enable traffic to reach the apps deployed to the private space
+    using a custom domain:
+
+    a.  Log in to your domain registrar.
+
+        Use Whois to look up your registrar.
+
+    b.  Create a CNAME record in your vanity domain, pointing to your
+        non-wildcard private space FQDN.
+
+        Your registrar might take up to 24 hours to apply the change.
+
+4.  Verify that your account has CloudHub Network Administrator
+    permission, which is required to modify a private space.
+
+    For information, see access-management::teams.xml.
+
+Create a TLS Context
+
+To create a new TLS context:
+
+Unresolved directive in ps-config-domains.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-config-domains.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+Click the Domains & TLS tab and then click Create TLS Context.
+
++ If you don’t have CloudHub Network Administrator permission, the
+Create TLS Context button is not available. . Enter a name for the TLS
+context.
+
++ The TLS context name can contain letters, numbers, spaces, and
+hyphens. . Configure the keystore:
+
++
+
+PEM format
+
+    1.  Select Upload PEM files.
+
+    2.  Click Choose file and select a public certificate to upload.
+
+        Uploading the public certificate displays a summary of the
+        certificate.
+
+        -   Click …​ > View Details to display the keystore details.
+
+        -   Click …​ > Delete to delete the public certificate.
+
+    3.  Click Choose file and select a private key to upload.
+
+    4.  Enter the key password used to access the private key within the
+        keystore.
+
+        If the private key is unencrypted (plain text), which is not
+        recommended, leave the Key Password field blank.
+
+        CloudHub 2.0 validates the password against the keystore.
+
+    5.  If you have a Certificate Authority (CA) path certificate file,
+        click Choose file to upload it.
+
+JKS format
+
+    1.  Select Upload JKS file.
+
+    2.  Click Choose file and select a keystore file to upload.
+
+    3.  Enter the password used to access the keystore file.
+
+        CloudHub 2.0 validates the password against the keystore.
+
+    4.  Select an alias from the drop-down list.
+
+        Selecting an alias displays a summary of the alias.
+
+        Click the i to display the alias details.
+
+    5.  Enter the key password used to access the private key within the
+        keystore.
+
+        CloudHub 2.0 validates the password against the key.
+
+1.  Follow the steps in Before You Begin to configure DNS.
+
+2.  Configure the truststore (optional):
+
+    If you want to use partial client authentication, configure a
+    truststore. The truststore defines the client certificates to use to
+    enable partial client authentication with the configured keystore.
+
+    Click Add Certificates to upload a certificate file (in PEM format).
+
+    When you upload a PEM file, CloudHub 2.0 displays the client
+    certificates from the truststore file.
+
+    -   Click Add Certificates to upload additional certificate files.
+
+    -   Click the information icon (View Details) to display the details
+        of an individual client certificate.
+
+    -   Click the trash can icon (Delete) to delete an individual client
+        certificate.
+
+    -   If more than four certificates are uploaded, click Show all x
+        Certificates to expand the link.
+
+3.  Configure advanced options: (Optional)
+
+    If you want to customize ciphers, configure advanced options.
+
+    a.  Click Advanced Options to display the cipher configuration.
+
+    b.  Select either Use Default Ciphers or Customize Ciphers.
+
+        If you choose to customize ciphers, CloudHub 2.0 displays the
+        default (selected) ciphers.
+
+        -   Click X to remove a cipher from the list.
+
+        -   Click Select to choose a different cipher from the drop-down
+            list.
+
+4.  Click Create TLS Context or Cancel to discard changes.
+
+View TLS Context Details
+
+Unresolved directive in ps-config-domains.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-config-domains.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Domains & TLS tab, in a custom TLS section, click the TLS context
+menu (…​) and select View Details.
+
+Delete a TLS Context
+
+Unresolved directive in ps-config-domains.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-config-domains.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+On the Domains & TLS tab, in a custom TLS section, click the TLS context
+menu (…​) and select Delete.
+
++ The Delete option appears only if you have CloudHub Network
+Administrator permission.
+
+Edit a TLS Context
+
+Unresolved directive in ps-config-domains.adoc -
+include::partial$select-private-space.adoc[tag=selectPrivateSpace]
+Unresolved directive in ps-config-domains.adoc -
+include::partial$select-private-space.adoc[tag=clickPrivateSpaceName] .
+Click the Domains & TLS tab and then click Edit.
+
++ The Edit button appears only if you have CloudHub Network
+Administrator permission.
+
+1.  Configure the keystore:
+
+    PEM format
+
+        1.  Click Choose file to replace the current public certificate
+            with a new public certificate.
+
+            You can’t change the private key or password unless you
+            replace the public certificate.
+
+            Uploading the public certificate displays a summary of the
+            certificate.
+
+            Click the information icon (View Details) to display the
+            keystore details.
+
+        2.  Choose a private key to upload.
+
+        3.  Enter the password used to access the private key within the
+            keystore.
+
+            If the key password is unencrypted (plain text), which is
+            not recommended, leave the Key Password field blank.
+
+            CloudHub 2.0 validates the password against the keystore.
+
+        4.  If you have a Certificate Authority (CA) path certificate
+            file, click Choose file to upload it.
+
+            You can remove and add a CA path certificate without
+            replacing the public certificate.
+
+    JKS format
+
+        1.  Click Choose file to replace the current keystore file with
+            a new keystore file.
+
+        2.  Enter the password used to access the keystore file.
+
+            CloudHub 2.0 validates the password against the keystore.
+
+        3.  Select an alias from the drop-down list.
+
+            You can select a different alias without replacing the
+            keystore file.
+
+            Selecting an alias displays a summary of the alias.
+
+            Click the information icon (View Details) to display the
+            alias details.
+
+        4.  Enter the key password used to access the private key within
+            the keystore.
+
+            CloudHub 2.0 validates the password against the key.
+
+2.  Configure the truststore: (Optional)
+
+    If you want to use partial client authentication, configure a
+    truststore. The truststore defines the client certificates to use to
+    enable partial client authentication with the configured keystore.
+
+    Click Add Certificates to upload a certificate file (in PEM format).
+
+    When you upload a PEM file, CloudHub 2.0 displays the client
+    certificates from the truststore file.
+
+    -   Click Add Certificates to upload additional certificate files.
+
+    -   Click the information icon (View Details) to display the details
+        of an individual client certificate.
+
+    -   Click the trash can icon (Delete) to delete an individual client
+        certificate.
+
+3.  Configure advanced options: (Optional)
+
+    If you want to customize ciphers, configure advanced options.
+
+    a.  Click Advanced options to display the cipher configuration.
+
+    b.  Select either Use Default Ciphers or Customize Ciphers.
+
+        If you choose to customize ciphers, CloudHub 2.0 displays the
+        default (selected) ciphers.
+
+        -   Click X to remove a cipher from the list.
+
+        -   Click Select a cipher to add to choose a different cipher.
+
+4.  Click Update TLS Context or Cancel to discard changes.
+
+Add the LetsEncrypt root to your truststore if you want the client to
+trust the cloudhub.io certificates.
+
+See Also
+
+-   ch2-deploy-private-space.xml
+
+-   ch2-config-endpoints-paths.xml
+
+-   mule-runtime::tls-configuration.xml

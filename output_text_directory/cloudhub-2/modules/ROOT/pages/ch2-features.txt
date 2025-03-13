@@ -1,0 +1,243 @@
+CloudHub 2.0 includes many of the features from CloudHub 1.0 and
+Anypoint Runtime Fabric on Self-Managed Kubernetes.
+
+CloudHub 2.0 Feature Comparison
+
+This table compares the features and support for CloudHub 2.0, CloudHub
+1.0, and Anypoint Runtime Fabric on Self-Managed Kubernetes.
+
++-----------------+-----------------+-----------------+-----------------+
+| Capability      | CloudHub 2.0    | CloudHub 1.0    | Runtime Fabric  |
++=================+=================+=================+=================+
+| VM Management   |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Provi           | Fully managed   | Fully managed   | Self-managed    |
+| sioning/scaling |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| OS patching     | Fully managed   | Fully managed   | Self-managed    |
++-----------------+-----------------+-----------------+-----------------+
+| VM self-healing | Fully managed   | Fully managed   | Supported       |
+|                 |                 |                 | (managed nodes) |
++-----------------+-----------------+-----------------+-----------------+
+| Persistent VM   | Not supported   | Supported       | Not supported   |
+| Queues          |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+|                 |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Load Balancing  |                 |                 |                 |
+| and Ingress     |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Default         | Fully managed   | Fully managed   | Not supported   |
+| endpoints       |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| URL rewriting   | Supported       | Supported       | Supported       |
+|                 |                 |                 |                 |
+|                 | (app-level)     | (DLB)           |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Provis          | Fully-managed   | Fully-managed   | Supported       |
+| ioning/updating |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Certificate     | Supported       | Supported       | Supported       |
+| management      |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Multiple        | Supported       | Not supported   | Supported       |
+| truststores     |                 |                 |                 |
+|                 |                 |                 |                 |
+| (client         |                 |                 |                 |
+| certificates    |                 |                 |                 |
+| for mutual TLS) |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Custom          | Supported       | Supported       | Supported       |
+| endpoints       |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Multiple custom | Supported       | Partially       | Supported       |
+| endpoints       |                 | supported       |                 |
+|                 |                 |                 |                 |
+| per app         |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| TLS 1.0         | Not supported   | Supported       | Supported       |
++-----------------+-----------------+-----------------+-----------------+
+| TLS 1.1         | Not supported   | Supported       | Supported       |
++-----------------+-----------------+-----------------+-----------------+
+| TLS 1.2         | Supported       | Supported       | Supported       |
++-----------------+-----------------+-----------------+-----------------+
+| TLS 1.3         | Supported       | Supported       | Supported       |
++-----------------+-----------------+-----------------+-----------------+
+| Private         | Supported       | Supported       | Supported       |
+| endpoints       |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Load balancer   | Supported       | Not supported   | Supported       |
+| logs            |                 |                 |                 |
+|                 | (download)      |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Ingress logs    | Supported       | Not supported   | Not supported   |
++-----------------+-----------------+-----------------+-----------------+
+|                 |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Network         |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Deployment      | 12 geographical | 12 geographical | Supported       |
+| regions         | regions         | regions         |                 |
+|                 |                 |                 | (manual)        |
++-----------------+-----------------+-----------------+-----------------+
+| Virtual Private | Fully managed   | Fully managed   | Supported       |
+| Cloud           |                 | (Anypoint VPC)  |                 |
+|                 | (private space) |                 | (manual)        |
++-----------------+-----------------+-----------------+-----------------+
+| Virtual Private | Fully managed   | Fully managed   | Supported       |
+| Network         |                 |                 |                 |
+|                 | (private space) | (Anypoint VPN)  | (manual)        |
++-----------------+-----------------+-----------------+-----------------+
+| AWS Transit     | Supported       | Supported       | Supported       |
+| Gateway         |                 |                 |                 |
+|                 | (private space) |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Direct Connect  | Not supported   | Supported       | Supported       |
+|                 |                 |                 |                 |
+|                 |                 | (not            |                 |
+|                 |                 | self-serve)     |                 |
++-----------------+-----------------+-----------------+-----------------+
+| VPC Peering     | Not supported   | Supported       | Supported       |
+|                 |                 |                 |                 |
+|                 |                 | (not            |                 |
+|                 |                 | self-serve)     |                 |
++-----------------+-----------------+-----------------+-----------------+
+| DNS             | Fully managed   | Fully managed   | Supported       |
++-----------------+-----------------+-----------------+-----------------+
+| Inbound         | Supported       | Supported       | Supported       |
+| firewall rules  |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Outbound        | Supported       | Not supported   | Supported       |
+| firewall rules  |                 |                 |                 |
+|                 | (private space) |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Static IP       | Supported       | Supported       | Supported       |
+| addresses       |                 |                 |                 |
+|                 | (private space) | (per app)       |                 |
++-----------------+-----------------+-----------------+-----------------+
+|                 |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| App             |                 |                 |                 |
+| Capabilities    |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Schedule        | Supported       | Supported       | Not supported   |
+| management      |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| TLS             | Supported       | Supported       | Not supported   |
+| certificates    |                 |                 |                 |
+|                 |                 |                 |                 |
+| for API Gateway |                 |                 |                 |
+| deployments     |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| DataGraph       | Not supported   | Supported       | Not supported   |
++-----------------+-----------------+-----------------+-----------------+
+| Mule patch      | Automated       | Automated       | Requires        |
+| updates         |                 |                 | redeployment    |
++-----------------+-----------------+-----------------+-----------------+
+| Cluster         | Fully managed   | Fully managed   | Self-managed    |
+|                 |                 |                 |                 |
+| management      |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Object store    | Fully managed   | Fully managed   | Supported       |
+|                 |                 |                 |                 |
+|                 | (Object Store   | (Object Store   |                 |
+|                 | v2)             | v2)             |                 |
++-----------------+-----------------+-----------------+-----------------+
+| High            | Fully managed   | Fully managed   | Supported       |
+| availability    |                 |                 |                 |
+|                 | (with two or    | (with two or    | (with two or    |
+| across AZs      | more replicas)  | more workers)   | more replicas)  |
++-----------------+-----------------+-----------------+-----------------+
+| Secure          | Supported       | Supported       | Partially       |
+| properties      |                 |                 | supported       |
++-----------------+-----------------+-----------------+-----------------+
+| Log tailing     | Fully managed   | Fully managed   | Supported       |
+|                 |                 |                 | outside         |
+|                 |                 |                 | Anypoint        |
+|                 |                 |                 | Platform        |
++-----------------+-----------------+-----------------+-----------------+
+| Continuous      | Supported       | Supported       | Supported       |
+| integration     |                 |                 |                 |
+| deployments     | (via API and    | (via API, Maven | (via API and    |
+|                 | Maven plugin,   | plugin,         | Maven plugin)   |
+|                 | Anypoint CLI)   | Anypoint CLI)   |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Built-in        | Not supported   | Supported       | Supported       |
+| notifications   |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Custom          | Not supported   | Supported       | Not supported   |
+| notifications   |                 |                 |                 |
+|                 |                 |                 |                 |
+| (CloudHub       |                 |                 |                 |
+| Connector)      |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Log forwarding  | Manual          | Supported       | Manual          |
+|                 |                 |                 |                 |
+|                 |                 | (per app)       |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Message broker  | Fully managed   | Fully managed   | Fully managed   |
+|                 |                 |                 |                 |
+|                 | (Anypoint MQ)   | (Anypoint MQ)   | (Anypoint MQ)   |
++-----------------+-----------------+-----------------+-----------------+
+| App monitoring  | Fully managed   | Fully managed   | Fully managed   |
+|                 |                 |                 |                 |
+|                 | (Anypoint       | (Anypoint       | (Anypoint       |
+|                 | Monitoring)     | Monitoring)     | Monitoring)     |
++-----------------+-----------------+-----------------+-----------------+
+| Application     | Supported       | Supported       | Supported       |
+| isolation       |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Auto-recovery   | Fully managed   | Fully managed   | Supported       |
++-----------------+-----------------+-----------------+-----------------+
+| Mule clustering | Supported       | Not supported   | Supported       |
++-----------------+-----------------+-----------------+-----------------+
+| Autoscaling     | Supported       | Supported       | Supported       |
++-----------------+-----------------+-----------------+-----------------+
+|                 |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Support         |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| VM management   | MuleSoft        | MuleSoft        | Infrastructure  |
+|                 |                 |                 | provider/       |
+|                 |                 |                 |                 |
+|                 |                 |                 | public cloud    |
++-----------------+-----------------+-----------------+-----------------+
+| Network         | MuleSoft        | MuleSoft        | Infrastructure  |
+|                 |                 |                 | provider/       |
+|                 |                 |                 |                 |
+|                 |                 |                 | public cloud    |
++-----------------+-----------------+-----------------+-----------------+
+| App             | MuleSoft        | MuleSoft        | MuleSoft/       |
+| capabilities    |                 |                 |                 |
+|                 |                 |                 | infrastructure  |
+|                 |                 |                 | provider/       |
+|                 |                 |                 |                 |
+|                 |                 |                 | public cloud    |
++-----------------+-----------------+-----------------+-----------------+
+| Load balancing  | MuleSoft        | MuleSoft        | Self-managed    |
+| and ingress     |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+| Backup and      | Fully managed   | Fully managed   | Self-managed    |
+| restore         |                 |                 |                 |
++-----------------+-----------------+-----------------+-----------------+
+
+: Feature Comparison
+
+Fully managed
+
+    MuleSoft provides and manages the feature.
+
+Self-managed
+
+    MuleSoft provides the feature, but the customer manages the feature.
+
+Supported
+
+    MuleSoft does not provide the feature, but it is available on
+    supported partner platforms. The feature is managed by the vendor,
+    platform, or customer.
+
+Not supported
+
+    MuleSoft does not provide the feature, and the customer cannot
+    configure it.

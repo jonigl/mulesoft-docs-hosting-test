@@ -1,0 +1,74 @@
+You can deploy Mule apps to either a shared or private space in CloudHub
+2.0.
+
+-   ch2-deploy-shared-space.xml
+
+-   ch2-deploy-private-space.xml
+
+-   ch2-download-test-app.xml
+
+Unresolved directive in ch2-deploy.adoc -
+include::partial$caveats.adoc[tag=supportedMule]
+
+Application Deployment
+
+After triggering a deployment, the application status eventually changes
+to RUNNING. If the application status never changes to RUNNING, the
+replicas contain a state and reason to indicate why the application
+status is not RUNNING.
+
+When an application is deployed, the following events occur:
+
+1.  The expected state of your application is stored, including
+    application bundle and number of replicas.
+
+2.  The application replica status is PENDING.
+
+3.  When adequate compute and memory resources are available, each
+    replica is attached to a node.
+
+4.  The replica status is STARTING.
+
+5.  The replica finishes loading the application.
+
+6.  The replica status is STARTED and the replica can now perform work.
+
+Application Deployment Failure
+
+If an application fails, for example, due to running of out memory, the
+following events occur:
+
+1.  The replica status is TERMINATED.
+
+2.  CloudHub 2.0 immediately attempts to restart the replica.
+
+3.  The replica status is RECOVERING.
+
+If the replica is able to restart:
+
+1.  The replica finishes loading the application.
+
+2.  The replica status is STARTED and the replica can now perform work.
+
+If the replica can’t restart, for example, it relies on a network
+resource which temporarily unavailable, the following events occur:
+
+1.  The replica status is PENDING, with a message indicating
+    "CrashLoopBackoff".
+
+    CloudHub 2.0 attempts to restart the replica, using exponential
+    backoff to avoid an excessive number of restart attempts.
+
+2.  The replica status alternates between RECOVERING and PENDING until
+    the issue preventing a successful restart is resolved.
+
+3.  The replica loads the application.
+
+After a successful restart, the replica status is STARTED and the
+replica can now perform work.
+
+See Also
+
+-   ch2-shared-space-about.xml
+
+-   ch2-private-space-about.xml
